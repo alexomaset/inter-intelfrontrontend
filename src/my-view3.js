@@ -15,6 +15,7 @@ class MyView3 extends LitElement {
   static get properties() {
     return {
       myArray: { type: Array },
+      dictionary: {type: Object}
     };
   }
 
@@ -47,7 +48,22 @@ class MyView3 extends LitElement {
       .then((data) => {
         this.myArray = data;
       })
-      .catch((e) => alert("An error occured!"));
+      .catch((e) => alert("Error!"));
+      const unDictionary = {...this.dictionary}
+
+      let soDictionary = {}
+      
+      Object.entries(unsortedDictionary).forEach(([key, value]) =>{
+        
+        if(isNaN(key) === true){
+          soDictionary[value]= key
+        }else {
+          soDictionary[key] = value
+        }
+  
+      } )
+      this.dictionary = soDictionary
+      
   }
 
   render() {
@@ -74,6 +90,28 @@ class MyView3 extends LitElement {
               </div>
             `
         )}
+        <div class="column">
+        <h1 style="width"><span class="tag">Dictionary</span></h1>
+        <table class="table  is-bordered">
+  <thead>
+    <tr>
+      <th>KEY</th>
+      <th>VALUE</th>
+   
+    </tr>
+  </thead>
+  <tbody>
+    ${Object.entries(this.dictionary).map(([key, value]) => html`
+    <tr>
+    <td>${key}</td>
+    <td>${value}</td>
+    </tr>
+    
+    `)}
+    </tbody>
+    </table>
+    </div>
+    </div>
       </div>
     `;
   }
